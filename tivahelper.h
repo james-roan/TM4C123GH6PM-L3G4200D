@@ -27,7 +27,6 @@
 #include "driverlib/comp.h"
 #include "driverlib/pwm.h"
 #include "driverlib/pin_map.h"
-#include "driverlib/uart.h"
 
 #define RED           GPIO_PIN_1
 #define BLU           GPIO_PIN_2

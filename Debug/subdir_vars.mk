@@ -12,36 +12,42 @@ C_SRCS += \
 ../gyro.c \
 ../master.c \
 ../tivahelper.c \
-../tm4c123gh6pm_startup_ccs.c 
+../tm4c123gh6pm_startup_ccs.c \
+../uarthelper.c 
 
 C_DEPS += \
 ./gyro.d \
 ./master.d \
 ./tivahelper.d \
-./tm4c123gh6pm_startup_ccs.d 
+./tm4c123gh6pm_startup_ccs.d \
+./uarthelper.d 
 
 OBJS += \
 ./gyro.obj \
 ./master.obj \
 ./tivahelper.obj \
-./tm4c123gh6pm_startup_ccs.obj 
+./tm4c123gh6pm_startup_ccs.obj \
+./uarthelper.obj 
 
 OBJS__QUOTED += \
 "gyro.obj" \
 "master.obj" \
 "tivahelper.obj" \
-"tm4c123gh6pm_startup_ccs.obj" 
+"tm4c123gh6pm_startup_ccs.obj" \
+"uarthelper.obj" 
 
 C_DEPS__QUOTED += \
 "gyro.d" \
 "master.d" \
 "tivahelper.d" \
-"tm4c123gh6pm_startup_ccs.d" 
+"tm4c123gh6pm_startup_ccs.d" \
+"uarthelper.d" 
 
 C_SRCS__QUOTED += \
 "../gyro.c" \
 "../master.c" \
 "../tivahelper.c" \
-"../tm4c123gh6pm_startup_ccs.c" 
+"../tm4c123gh6pm_startup_ccs.c" \
+"../uarthelper.c" 
 
 

@@ -1,11 +1,12 @@
 /*
- * main.c
+ * master.c - flash this one to the master TM4C123GH6PM, which interfaces with the L3G4200D
  *
  *  Created on: Mar 16, 2019
  *      Author: James Roan
  */
 
 #include "tivahelper.h"
+#include "uarthelper.h"
 #include "gyro.h"
 
 void initSSI(void);
@@ -70,20 +71,6 @@ void initUART(void){
 
     char msg [] = {"UART Port Initialized..."};
     uartPrintln(msg);
-}
-
-void uartPrint(char message []) {
-    int length = strlen(message);
-    int i;
-    for (i = 0; i < length; i++) {
-        UARTCharPut(UART0_BASE, message[i]);
-    }
-}
-
-void uartPrintln(char message []) {
-    uartPrint(message);
-    UARTCharPut(UART0_BASE, '\r');
-    UARTCharPut(UART0_BASE, '\n');
 }
 
 int main (void) {
