@@ -6,7 +6,8 @@
  *      Author: James Roan
  */
 
-#include "tivahelper.c"
+#include "tivahelper.h"
+#include "uarthelper.h"
 
 void initUART(void){
     SysCtlPeripheralEnable(SYSCTL_PERIPH_UART0);
