@@ -107,6 +107,7 @@ int main (void) {
 //    uartPrintln("");
 
     while(1){
+        SysCtlDelay(20000000);
         UARTCharPut(UART7_BASE, 'A');
     }
 
