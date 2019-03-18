@@ -10,10 +10,12 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include <string.h>
 #include "driverlib/uart.h"
 #include "inc/hw_memmap.h"
 
-
+void uartPrint(char message []);
+void uartPrintln(char message []);
 
 
 #endif /* UARTHELPER_H_ */

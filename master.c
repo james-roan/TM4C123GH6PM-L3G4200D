@@ -24,22 +24,22 @@ void initSSI(void){
      *                                                                                   *
      * The TM4C123GH6PM's SPI module is configured by the SPO Clock Polarity Bit and     *
      * the SPH Phase Control Bit in the SSICR0 register                                  *
-     * when SPO is 0, a steady low signal is set on the SSInClk pin
-     * when SPO is 1, a steady state High value is placed on the SSInClk pin when data
-     * is not being transferred
-     * when SPH is 0, data is captured on the first clock edge transition
-     * when SPH is 1, data is captured on the second clock edge transition
-     *
-     * This means we should set SPO to 1 and SPH to 1, this corresponds to
-     * SSI_FRF_MOTO_MODE_3 in "driverlib/ssi.h"
-     *
-     * The pins should be mapped as such:
-     *     GPIO_PB4_SSI2CLK --> SPC --> SCLK (4)
-     *     GPIO_PB5_SSI2FSS --> CS  --> ~CS  (1)
-     *     GPIO_PB7_SSI2TX  --> SDI --> MOSI (2)
-     *     GPIO_PB6_SSI2RX  --> SDO --> MISO (3)
-     *
-     */
+     * when SPO is 0, a steady low signal is set on the SSInClk pin                      *
+     * when SPO is 1, a steady state High value is placed on the SSInClk pin when data   *
+     * is not being transferred                                                          *
+     * when SPH is 0, data is captured on the first clock edge transition                *
+     * when SPH is 1, data is captured on the second clock edge transition               *
+     *                                                                                   *
+     * This means we should set SPO to 1 and SPH to 0, this corresponds to               *
+     * SSI_FRF_MOTO_MODE_2 in "driverlib/ssi.h"                                          *
+     *                                                                                   *
+     * The pins should be mapped as such:                                                *
+     *     GPIO_PB4_SSI2CLK --> SPC --> SCLK (4)                                         *
+     *     GPIO_PB5_SSI2FSS --> CS  --> ~CS  (1)                                         *
+     *     GPIO_PB7_SSI2TX  --> SDI --> MOSI (2)                                         *
+     *     GPIO_PB6_SSI2RX  --> SDO --> MISO (3)                                         *
+     *                                                                                   *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     //Enable the peripheral port GPIOB and enable the SSI module at GPIOB i.e. SSI2.
     SysCtlPeripheralEnable(SYSCTL_PERIPH_SSI2);
@@ -50,8 +50,9 @@ void initSSI(void){
     GPIOPinConfigure(GPIO_PB6_SSI2RX);
     GPIOPinConfigure(GPIO_PB7_SSI2TX);
     GPIOPinTypeSSI(GPIO_PORTB_BASE,GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7);
-    //Set the SSI TX module to run from SSI2 with system clock frequency, in SPI 11 mode, as a master at 10000 bps with 16 bit data width.
-    SSIConfigSetExpClk(SSI2_BASE,SysCtlClockGet(),SSI_FRF_MOTO_MODE_3,SSI_MODE_MASTER,10000,16);
+    //Set the SSI TX module to run from SSI2 with system clock frequency, in SPI 10 mode, as a master at 100 bps with 16 bit data width.
+    SSIConfigSetExpClk(SSI2_BASE,SysCtlClockGet(),SSI_FRF_MOTO_MODE_2,SSI_MODE_MASTER,100,16);
+
     //Enable the SSI2 module.
     SSIEnable(SSI2_BASE);
     char msg [] = {"SSI Port Initialized..."};
@@ -79,17 +80,18 @@ int main (void) {
     uartPrintln(welcome);
     initSSI();
     char msg [10];
-    uint16_t num = 0x8F00;
+    uint16_t num = 0x8000 | CTRL_REG2 << 8;
         sprintf(msg, "%d", num);
-        uartPrint("Pre  reverse: ");
+        uartPrint("Address: ");
         uartPrintln(msg);
-        uartPrint("Post reverse: ");
-        num = reverse(num);
-        sprintf(msg, "%d", num);
-        uartPrintln(msg);
+        //uartPrint("Post reverse: ");
+        //num = reverse(num);
+        //sprintf(msg, "%d", num);
+        //uartPrintln(msg);
 
     uartPrintln("attempting to read WHO_AM_I register");
     SSIDataPut(SSI2_BASE, num);
+    //SSIDataPut(SSI2_BASE, 0x00);
     uint32_t data = 0;
     SSIDataGet(SSI2_BASE, &data);
     uartPrint("WHO_AM_I returned ");
