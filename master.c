@@ -96,33 +96,20 @@ int main (void) {
     initUART();
     uartPrintln(welcome);
     initSSI();
-//    char msg [10];
-//    uint16_t num = 0x8000 | CTRL_REG2 << 8;
-//        sprintf(msg, "%d", num);
-//        uartPrint("Address: ");
-//        uartPrintln(msg);
-//        //uartPrint("Post reverse: ");
-//        //num = reverse(num);
-//        //sprintf(msg, "%d", num);
-//        //uartPrintln(msg);
-//
-//    uartPrintln("attempting to read WHO_AM_I register");
-//    SSIDataPut(SSI2_BASE, num);
-//    //SSIDataPut(SSI2_BASE, 0x00);
-//    uint32_t data = 0;
-//    SSIDataGet(SSI2_BASE, &data);
-//    uartPrint("WHO_AM_I returned ");
-//    sprintf(msg, "%d", data);
-//    uartPrintln(msg);
-//
-//    uartPrintln("");
+    uint16_t num = 0x8000 | CTRL_REG1 << 8;
+    SSIDataPut(SSI2_BASE, num);
+    uint32_t data = 0;
+    SSIDataGet(SSI2_BASE, &data);
+
     while(1){
         SysCtlDelay(20000000);
         uartSendData("BEGIN GYRO DATA\r\n");
+        char reg_return [17];
+        sprintf(reg_return, "%d", data);
         unsigned int i = 0;
         for(i = 0; i < 6; i++){
             char msg [9];
-            //char * dat_ptr = &dat;
+
             sprintf(msg, "%d", gyroData[i]);
             uartSendData(msg);
             UARTCharPut(UART7_BASE, '\r');
