@@ -16,6 +16,8 @@
 
 void uartPrint(char message []);
 void uartPrintln(char message []);
+void uartSendData(char data []);
+bool uartDataReady(void);
 
 
 #endif /* UARTHELPER_H_ */
