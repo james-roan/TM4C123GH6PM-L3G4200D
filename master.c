@@ -106,6 +106,9 @@ int main (void) {
         uartSendData("BEGIN GYRO DATA\r\n");
         char reg_return [17];
         sprintf(reg_return, "%d", data);
+        uartSendData("reg_return");
+        uartSendData(reg_return);
+        uartSendData("\r\n");
         unsigned int i = 0;
         for(i = 0; i < 6; i++){
             char msg [9];
