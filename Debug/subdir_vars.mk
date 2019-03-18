@@ -10,42 +10,42 @@ CMD_SRCS += \
 
 C_SRCS += \
 ../gyro.c \
-../master.c \
+../slave.c \
 ../tivahelper.c \
 ../tm4c123gh6pm_startup_ccs.c \
 ../uarthelper.c 
 
 C_DEPS += \
 ./gyro.d \
-./master.d \
+./slave.d \
 ./tivahelper.d \
 ./tm4c123gh6pm_startup_ccs.d \
 ./uarthelper.d 
 
 OBJS += \
 ./gyro.obj \
-./master.obj \
+./slave.obj \
 ./tivahelper.obj \
 ./tm4c123gh6pm_startup_ccs.obj \
 ./uarthelper.obj 
 
 OBJS__QUOTED += \
 "gyro.obj" \
-"master.obj" \
+"slave.obj" \
 "tivahelper.obj" \
 "tm4c123gh6pm_startup_ccs.obj" \
 "uarthelper.obj" 
 
 C_DEPS__QUOTED += \
 "gyro.d" \
-"master.d" \
+"slave.d" \
 "tivahelper.d" \
 "tm4c123gh6pm_startup_ccs.d" \
 "uarthelper.d" 
 
 C_SRCS__QUOTED += \
 "../gyro.c" \
-"../master.c" \
+"../slave.c" \
 "../tivahelper.c" \
 "../tm4c123gh6pm_startup_ccs.c" \
 "../uarthelper.c" 

@@ -3,7 +3,11 @@
  *
  *  Created on: Mar 17, 2019
  *      Author: James Roan
+ *
+ *  Notes: UART0_BASE is connected to the USB interface, so it cannot be used for UART between boards
  */
+
+
 
 #include "uarthelper.h"
 
@@ -29,18 +33,6 @@ void uartSendData(char data []){
 }
 
 bool uartDataReady(void) {
-    if (!UARTCharsAvail(UART0_BASE)){
-        // if there is no data ready whatsoever, return false
-        return false;
-    }
-    else {
-        // otherwise, check if this is the correct data
-        char delim_check [DELIM_LENGTH];
-        unsigned int i = 0;
-        while(UARTCharsAvail(UART0_BASE)){
-            delim_check[i] = UARTCharGet(UART0_BASE);
-        }
-        return strcmp(DATA_DELIMITER, delim_check)
-    }
+    return UARTCharsAvail(UART7_BASE);
 }
 

@@ -11,7 +11,7 @@ GEN_CMDS__FLAG :=
 
 ORDERED_OBJS += \
 "./gyro.obj" \
-"./master.obj" \
+"./slave.obj" \
 "./tivahelper.obj" \
 "./tm4c123gh6pm_startup_ccs.obj" \
 "./uarthelper.obj" \
@@ -159,8 +159,8 @@ TM4C123GH6PM-L3G4200D.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "gyro.obj" "master.obj" "tivahelper.obj" "tm4c123gh6pm_startup_ccs.obj" "uarthelper.obj" 
-	-$(RM) "gyro.d" "master.d" "tivahelper.d" "tm4c123gh6pm_startup_ccs.d" "uarthelper.d" 
+	-$(RM) "gyro.obj" "slave.obj" "tivahelper.obj" "tm4c123gh6pm_startup_ccs.obj" "uarthelper.obj" 
+	-$(RM) "gyro.d" "slave.d" "tivahelper.d" "tm4c123gh6pm_startup_ccs.d" "uarthelper.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

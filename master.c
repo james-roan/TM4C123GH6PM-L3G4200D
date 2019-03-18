@@ -9,11 +9,6 @@
 #include "uarthelper.h"
 #include "gyro.h"
 
-void initSSI(void);
-void initUART(void);
-void uartPrint(char message []);
-void uartPrintln(char message []);
-
 char welcome [] = {"L3G4200D via SPI to UART: Master Loading..."};
 
 void initSSI(void){
@@ -60,17 +55,28 @@ void initSSI(void){
 }
 
 void initUART(void){
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_UART0);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_UART0); // for USB serial
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
+
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_UART7); //Enable UART 7 in GPIO port E.
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE); //Enable port E.
 
     GPIOPinConfigure(GPIO_PA0_U0RX);
     GPIOPinConfigure(GPIO_PA1_U0TX);
-    GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
 
+    GPIOPinConfigure(GPIO_PE0_U7RX); //Set port E pin 0 as UART 7 RX.
+    GPIOPinConfigure(GPIO_PE1_U7TX); //Set port E pin 1 as UART 7 TX.
+
+    GPIOPinTypeUART(GPIO_PORTE_BASE, GPIO_PIN_0 | GPIO_PIN_1);
+    //Set UART 7 clock to system clock at 115200 baud with 8 bit data length, one stop bit and no parity bits.
+    UARTConfigSetExpClk(UART7_BASE, SysCtlClockGet(), 115200,
+        (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE | UART_CONFIG_PAR_NONE));
+
+    GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
     UARTConfigSetExpClk(UART0_BASE, SysCtlClockGet(), 115200,
         (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE | UART_CONFIG_PAR_NONE));
 
-    char msg [] = {"UART Port Initialized..."};
+    char msg [] = {"UART Ports Initialized..."};
     uartPrintln(msg);
 }
 
@@ -79,28 +85,29 @@ int main (void) {
     initUART();
     uartPrintln(welcome);
     initSSI();
-    char msg [10];
-    uint16_t num = 0x8000 | CTRL_REG2 << 8;
-        sprintf(msg, "%d", num);
-        uartPrint("Address: ");
-        uartPrintln(msg);
-        //uartPrint("Post reverse: ");
-        //num = reverse(num);
-        //sprintf(msg, "%d", num);
-        //uartPrintln(msg);
+//    char msg [10];
+//    uint16_t num = 0x8000 | CTRL_REG2 << 8;
+//        sprintf(msg, "%d", num);
+//        uartPrint("Address: ");
+//        uartPrintln(msg);
+//        //uartPrint("Post reverse: ");
+//        //num = reverse(num);
+//        //sprintf(msg, "%d", num);
+//        //uartPrintln(msg);
+//
+//    uartPrintln("attempting to read WHO_AM_I register");
+//    SSIDataPut(SSI2_BASE, num);
+//    //SSIDataPut(SSI2_BASE, 0x00);
+//    uint32_t data = 0;
+//    SSIDataGet(SSI2_BASE, &data);
+//    uartPrint("WHO_AM_I returned ");
+//    sprintf(msg, "%d", data);
+//    uartPrintln(msg);
+//
+//    uartPrintln("");
 
-    uartPrintln("attempting to read WHO_AM_I register");
-    SSIDataPut(SSI2_BASE, num);
-    //SSIDataPut(SSI2_BASE, 0x00);
-    uint32_t data = 0;
-    SSIDataGet(SSI2_BASE, &data);
-    uartPrint("WHO_AM_I returned ");
-    sprintf(msg, "%d", data);
-    uartPrintln(msg);
-
-    uartPrintln("");
     while(1){
-
+        UARTCharPut(UART7_BASE, 'A');
     }
 
     return 0;
