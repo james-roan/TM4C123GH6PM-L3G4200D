@@ -41,7 +41,9 @@ int main (void) {
 
     while(1){
         if(uartDataReady()){
-            uartPrintln((char *)UARTCharGet(UART7_BASE));
+            char a [] = {"  "};
+            a[0] = (char) UARTCharGet(UART7_BASE);
+            uartPrintln(a);
         }
     }
     return 0;
