@@ -29,7 +29,11 @@ void uartPrintln(char message []) {
 }
 
 void uartSendData(char data []){
-
+    int length = strlen(data);
+    int i;
+    for (i = 0; i < length; i++) {
+        UARTCharPut(UART7_BASE, data[i]);
+    }
 }
 
 bool uartDataReady(void) {

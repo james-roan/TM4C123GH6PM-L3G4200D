@@ -9,6 +9,15 @@
 #include "uarthelper.h"
 #include "gyro.h"
 
+struct GyroData {
+    uint8_t X_H;
+    uint8_t X_L;
+    uint8_t Y_H;
+    uint8_t Y_L;
+    uint8_t Z_H;
+    uint8_t Z_L;
+};
+
 char welcome [] = {"L3G4200D via SPI to UART: Master Loading..."};
 
 void initSSI(void){
@@ -105,10 +114,16 @@ int main (void) {
 //    uartPrintln(msg);
 //
 //    uartPrintln("");
-
+    struct GyroData dat = {0,1,2,3,4,5};
     while(1){
-        SysCtlDelay(20000000);
-        UARTCharPut(UART7_BASE, 'A');
+        uartSendData("BEGIN GYRO DATA\r\n");
+        unsigned int i = 0;
+        for(i = 0; i < 6; i++){
+            char msg [9];
+            char * dat_ptr = &dat;
+            sprintf(msg, "%d", *dat_ptr + i);
+            UARTCharPut(UART7_BASE, msg[0]);
+        }
     }
 
     return 0;

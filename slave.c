@@ -43,7 +43,7 @@ int main (void) {
         if(uartDataReady()){
             char a [] = {"  "};
             a[0] = (char) UARTCharGet(UART7_BASE);
-            uartPrintln(a);
+            uartPrint(a);
         }
     }
     return 0;
