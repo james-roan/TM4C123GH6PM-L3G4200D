@@ -117,6 +117,7 @@ int main (void) {
 //
 //    uartPrintln("");
     while(1){
+        SysCtlDelay(20000000);
         uartSendData("BEGIN GYRO DATA\r\n");
         unsigned int i = 0;
         for(i = 0; i < 6; i++){
@@ -124,6 +125,8 @@ int main (void) {
             //char * dat_ptr = &dat;
             sprintf(msg, "%d", gyroData[i]);
             uartSendData(msg);
+            UARTCharPut(UART7_BASE, '\r');
+            UARTCharPut(UART7_BASE, '\n');
         }
     }
 
